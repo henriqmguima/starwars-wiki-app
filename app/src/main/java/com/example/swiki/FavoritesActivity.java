@@ -17,7 +17,6 @@ public class FavoritesActivity extends AppCompatActivity {
     private RecyclerView rvPessoas, rvFilmes;
     private FavoriteAdapter adapterPessoas, adapterFilmes;
     private LinearLayout btnVoltar;
-    private ImageView logoApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,6 @@ public class FavoritesActivity extends AppCompatActivity {
         rvPessoas = findViewById(R.id.rvPessoas);
         rvFilmes = findViewById(R.id.rvFilmes);
         btnVoltar = findViewById(R.id.btnVoltar);
-        logoApp = findViewById(R.id.logoApp);
 
         rvPessoas.setLayoutManager(new LinearLayoutManager(this));
         rvFilmes.setLayoutManager(new LinearLayoutManager(this));
