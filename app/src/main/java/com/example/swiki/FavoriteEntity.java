@@ -19,7 +19,6 @@ public class FavoriteEntity {
         this.tipo = tipo;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,6 @@ public class FavoritesActivity extends AppCompatActivity {
     private RecyclerView rvPessoas, rvFilmes;
     private FavoriteAdapter adapterPessoas, adapterFilmes;
     private LinearLayout btnVoltar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +40,23 @@ public class FavoritesActivity extends AppCompatActivity {
             AppDatabase db = AppDatabase.getInstance(getApplicationContext());
             List<FavoriteEntity> todos = db.favoriteDao().getAllFavorites();
 
-            List<FavoriteEntity> pessoas = todos.stream()
-                    .filter(f -> f.getTipo().equals("person"))
-                    .collect(Collectors.toList());
+            List<FavoriteEntity> filmes = new ArrayList<>();
+            for (FavoriteEntity f : todos) {
+                if (f.getTipo().equals("movie")) {
+                    filmes.add(f);
+                }
+            }
 
-            List<FavoriteEntity> filmes = todos.stream()
-                    .filter(f -> f.getTipo().equals("movie"))
-                    .collect(Collectors.toList());
+
+
+            List<FavoriteEntity> pessoas = new ArrayList<>();
+            for (FavoriteEntity p : todos) {
+                if (p.getTipo().equals("person")) {
+                    pessoas.add(p);
+                }
+            }
+
+
 
             runOnUiThread(() -> {
                 adapterPessoas = new FavoriteAdapter(pessoas);
