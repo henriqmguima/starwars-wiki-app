@@ -40,19 +40,23 @@ public class MoviesActivity extends AppCompatActivity {
 
     private void carregarFilmes() {
         SwapiService service = RetrofitClient.getInstance().create(SwapiService.class);
-        service.getFilms().enqueue(new Callback<FilmsResponse>() {
+        Call<FilmsResponse> call = service.getFilms();
+
+        call.enqueue(new Callback<FilmsResponse>() {
             @Override
             public void onResponse(Call<FilmsResponse> call, Response<FilmsResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    movieList.clear();  // limpar antes de adicionar
-                    movieList.addAll(response.body().getResult());
-                    movieAdapter.notifyDataSetChanged();
+                    List<FilmResult> filmes = response.body().getResult();
+                    movieAdapter = new MovieAdapter(filmes);
+                    recyclerMovies.setAdapter(movieAdapter);
+                } else {
+                    Toast.makeText(MoviesActivity.this, "Erro ao carregar filmes", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<FilmsResponse> call, Throwable t) {
-                Toast.makeText(MoviesActivity.this, "Erro ao carregar filmes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MoviesActivity.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

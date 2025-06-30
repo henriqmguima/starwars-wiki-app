@@ -53,7 +53,6 @@ public class DetailPActivity extends AppCompatActivity {
 
         SwapiService service = RetrofitClient.getInstance().create(SwapiService.class);
 
-
         Call<CharacterResponse> call = service.getCharacterById(id);
         call.enqueue(new Callback<CharacterResponse>() {
             @Override
