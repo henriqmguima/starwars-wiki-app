@@ -50,12 +50,9 @@ public class DetailPActivity extends AppCompatActivity {
     }
 
     private void buscarDetalhesPersonagem(String id) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.swapi.tech/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        SwapiService service = retrofit.create(SwapiService.class);
+        SwapiService service = RetrofitClient.getInstance().create(SwapiService.class);
+
 
         Call<CharacterResponse> call = service.getCharacterById(id);
         call.enqueue(new Callback<CharacterResponse>() {
